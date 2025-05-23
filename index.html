@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Controle de Vacas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Controle de Vacas</h1>
+    
+    <div class="tabs">
+      <button onclick="mostrarAba('cadastro')">Cadastro</button>
+      <button onclick="mostrarAba('listagem')">Listagem</button>
+    </div>
+
+    <div id="cadastro" class="aba">
+      <form id="formVaca">
+        <input type="text" id="numero" placeholder="Número da Vaca" required />
+        <input type="date" id="data" required />
+        <select id="sexo" required>
+          <option value="">Sexo do Bezerro</option>
+          <option value="Macho">Macho</option>
+          <option value="Fêmea">Fêmea</option>
+        </select>
+        <textarea id="descricao" placeholder="Descrição"></textarea>
+        <button type="submit">Adicionar</button>
+      </form>
+    </div>
+
+    <div id="listagem" class="aba" style="display:none;">
+      <div id="listaVacas"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
