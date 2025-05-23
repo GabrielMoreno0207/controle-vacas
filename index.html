@@ -1,39 +1,41 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Controle de Vacas</title>
-  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
-  <div class="container">
-    <h1>Controle de Vacas</h1>
-    
-    <div class="tabs">
-      <button onclick="mostrarAba('cadastro')">Cadastro</button>
-      <button onclick="mostrarAba('listagem')">Listagem</button>
+<body class="bg-green-100 min-h-screen flex items-center justify-center p-4">
+
+  <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-3xl space-y-6">
+    <h1 class="text-3xl font-bold text-center text-green-700 flex items-center justify-center gap-2">
+      <span class="material-icons"></span> Controle de Vacas 🐄
+    </h1>
+
+    <!-- Formulário -->
+    <form id="form-vaca" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input type="text" id="numero" placeholder="Número da vaca" required class="p-2 border rounded">
+      <input type="date" id="data" required class="p-2 border rounded">
+      <select id="sexo" required class="p-2 border rounded">
+        <option value="">Sexo do bezerro</option>
+        <option value="Macho">Macho</option>
+        <option value="Fêmea">Fêmea</option>
+      </select>
+      <input type="text" id="descricao" placeholder="Descrição" class="p-2 border rounded">
+      <button type="submit" class="col-span-1 md:col-span-2 bg-green-500 text-white py-2 rounded hover:bg-green-600 transition">Cadastrar Vaca</button>
+    </form>
+
+    <!-- Barra de pesquisa -->
+    <div>
+      <input type="text" id="pesquisa" placeholder="Pesquisar por número ou descrição..." class="w-full p-2 border rounded">
     </div>
 
-    <div id="cadastro" class="aba">
-      <form id="formVaca">
-        <input type="text" id="numero" placeholder="Número da Vaca" required />
-        <input type="date" id="data" required />
-        <select id="sexo" required>
-          <option value="">Sexo do Bezerro</option>
-          <option value="Macho">Macho</option>
-          <option value="Fêmea">Fêmea</option>
-        </select>
-        <textarea id="descricao" placeholder="Descrição"></textarea>
-        <button type="submit">Adicionar</button>
-      </form>
-    </div>
-
-    <div id="listagem" class="aba" style="display:none;">
-      <div id="listaVacas"></div>
-    </div>
+    <!-- Lista -->
+    <div id="lista" class="space-y-4"></div>
   </div>
 
   <script src="script.js"></script>
 </body>
-</html>
+</html> 
