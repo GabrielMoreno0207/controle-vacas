@@ -1,6 +1,7 @@
 const form = document.getElementById("form-vaca");
 const lista = document.getElementById("lista");
 const pesquisa = document.getElementById("pesquisa");
+const exportarPdfBtn = document.getElementById("exportar-pdf");
 
 let vacas = JSON.parse(localStorage.getItem("vacas")) || [];
 
@@ -20,7 +21,7 @@ function atualizarLista(filtro = "") {
           <p><strong>Sexo:</strong> ${vaca.sexo}</p>
           <p><strong>Descrição:</strong> ${vaca.descricao}</p>
         </div>
-        <button onclick="removerVaca(${index})" class="text-red-500 hover:text-red-700 material-icons">delete</button>
+        <button onclick="removerVaca(${index})" class="text-red-500 hover:text-red-700 material-icons" title="Remover">delete</button>
       `;
 
       lista.appendChild(div);
@@ -50,9 +51,44 @@ function removerVaca(index) {
     atualizarLista();
   }
 }
+window.removerVaca = removerVaca;
 
 pesquisa.addEventListener("input", () => {
   atualizarLista(pesquisa.value);
 });
 
 atualizarLista();
+
+const { jsPDF } = window.jspdf;
+
+exportarPdfBtn.addEventListener("click", () => {
+  if (vacas.length === 0) {
+    alert("Nenhum dado para exportar.");
+    return;
+  }
+
+  const doc = new jsPDF();
+  doc.setFontSize(18);
+  doc.text("Controle de Vacas - Exportação", 14, 22);
+  doc.setFontSize(12);
+
+  let y = 30;
+
+  vacas.forEach((vaca) => {
+    doc.text(`Número: ${vaca.numero}`, 14, y);
+    y += 8;
+    doc.text(`Data Nasc.: ${vaca.data}`, 14, y);
+    y += 8;
+    doc.text(`Sexo: ${vaca.sexo}`, 14, y);
+    y += 8;
+    doc.text(`Descrição: ${vaca.descricao}`, 14, y);
+    y += 12;
+
+    if (y > 270) {
+      doc.addPage();
+      y = 20;
+    }
+  });
+
+  doc.save("controle-de-vacas.pdf");
+});

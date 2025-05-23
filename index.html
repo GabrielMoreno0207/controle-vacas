@@ -2,40 +2,47 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Controle de Vacas</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body class="bg-green-100 min-h-screen flex items-center justify-center p-4">
 
   <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-3xl space-y-6">
     <h1 class="text-3xl font-bold text-center text-green-700 flex items-center justify-center gap-2">
-      <span class="material-icons"></span> Controle de Vacas 🐄
+      <span class="material-icons">pets</span> Controle de Vacas 🐄
     </h1>
 
     <!-- Formulário -->
     <form id="form-vaca" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <input type="text" id="numero" placeholder="Número da vaca" required class="p-2 border rounded">
-      <input type="date" id="data" required class="p-2 border rounded">
+      <input type="text" id="numero" placeholder="Número da vaca" required class="p-2 border rounded" />
+      <input type="date" id="data" required class="p-2 border rounded" />
       <select id="sexo" required class="p-2 border rounded">
         <option value="">Sexo do bezerro</option>
         <option value="Macho">Macho</option>
         <option value="Fêmea">Fêmea</option>
       </select>
-      <input type="text" id="descricao" placeholder="Descrição" class="p-2 border rounded">
+      <input type="text" id="descricao" placeholder="Descrição" class="p-2 border rounded" />
       <button type="submit" class="col-span-1 md:col-span-2 bg-green-500 text-white py-2 rounded hover:bg-green-600 transition">Cadastrar Vaca</button>
     </form>
 
     <!-- Barra de pesquisa -->
     <div>
-      <input type="text" id="pesquisa" placeholder="Pesquisar por número ou descrição..." class="w-full p-2 border rounded">
+      <input type="text" id="pesquisa" placeholder="Pesquisar por número ou descrição..." class="w-full p-2 border rounded" />
     </div>
 
     <!-- Lista -->
     <div id="lista" class="space-y-4"></div>
+
+    <!-- Botão Exportar PDF -->
+    <button id="exportar-pdf" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition flex items-center gap-2 justify-center">
+      <span class="material-icons">picture_as_pdf</span> Exportar PDF
+    </button>
   </div>
 
   <script src="script.js"></script>
 </body>
-</html> 
+</html>
