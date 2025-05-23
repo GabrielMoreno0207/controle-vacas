@@ -1,31 +1,53 @@
 const form = document.getElementById("form-vaca");
-const lista = document.getElementById("lista");
 const pesquisa = document.getElementById("pesquisa");
+const listaMachos = document.getElementById("lista-machos");
+const listaFemeas = document.getElementById("lista-femeas");
 const exportarPdfBtn = document.getElementById("exportar-pdf");
 
 let vacas = JSON.parse(localStorage.getItem("vacas")) || [];
 
 function atualizarLista(filtro = "") {
-  lista.innerHTML = "";
+  listaMachos.innerHTML = "";
+  listaFemeas.innerHTML = "";
 
-  vacas
-    .filter(v => v.numero.includes(filtro) || v.descricao.toLowerCase().includes(filtro.toLowerCase()))
-    .forEach((vaca, index) => {
-      const div = document.createElement("div");
-      div.className = "bg-gray-100 p-4 rounded shadow flex justify-between items-center";
+  const machosFiltrados = vacas.filter(
+    v => v.sexo === "Macho" && (v.numero.includes(filtro) || v.descricao.toLowerCase().includes(filtro.toLowerCase()))
+  );
+  const femeasFiltradas = vacas.filter(
+    v => v.sexo === "Fêmea" && (v.numero.includes(filtro) || v.descricao.toLowerCase().includes(filtro.toLowerCase()))
+  );
 
-      div.innerHTML = `
-        <div>
-          <p><strong>Número:</strong> ${vaca.numero}</p>
-          <p><strong>Data Nasc.:</strong> ${vaca.data}</p>
-          <p><strong>Sexo:</strong> ${vaca.sexo}</p>
-          <p><strong>Descrição:</strong> ${vaca.descricao}</p>
-        </div>
-        <button onclick="removerVaca(${index})" class="text-red-500 hover:text-red-700 material-icons" title="Remover">delete</button>
-      `;
+  machosFiltrados.forEach((vaca) => {
+    const div = document.createElement("div");
+    div.className = "bg-gray-100 p-4 rounded shadow flex justify-between items-center";
 
-      lista.appendChild(div);
-    });
+    div.innerHTML = `
+      <div>
+        <p><strong>Número:</strong> ${vaca.numero}</p>
+        <p><strong>Data Nasc.:</strong> ${vaca.data}</p>
+        <p><strong>Descrição:</strong> ${vaca.descricao}</p>
+      </div>
+      <button onclick="removerVaca(${vacas.indexOf(vaca)})" class="text-red-500 hover:text-red-700 material-icons" title="Remover">delete</button>
+    `;
+
+    listaMachos.appendChild(div);
+  });
+
+  femeasFiltradas.forEach((vaca) => {
+    const div = document.createElement("div");
+    div.className = "bg-gray-100 p-4 rounded shadow flex justify-between items-center";
+
+    div.innerHTML = `
+      <div>
+        <p><strong>Número:</strong> ${vaca.numero}</p>
+        <p><strong>Data Nasc.:</strong> ${vaca.data}</p>
+        <p><strong>Descrição:</strong> ${vaca.descricao}</p>
+      </div>
+      <button onclick="removerVaca(${vacas.indexOf(vaca)})" class="text-red-500 hover:text-red-700 material-icons" title="Remover">delete</button>
+    `;
+
+    listaFemeas.appendChild(div);
+  });
 }
 
 form.addEventListener("submit", (e) => {
@@ -51,6 +73,7 @@ function removerVaca(index) {
     atualizarLista();
   }
 }
+// deixar a função acessível globalmente para o botão inline
 window.removerVaca = removerVaca;
 
 pesquisa.addEventListener("input", () => {
@@ -74,7 +97,7 @@ exportarPdfBtn.addEventListener("click", () => {
 
   let y = 30;
 
-  vacas.forEach((vaca) => {
+  vacas.forEach((vaca, i) => {
     doc.text(`Número: ${vaca.numero}`, 14, y);
     y += 8;
     doc.text(`Data Nasc.: ${vaca.data}`, 14, y);
